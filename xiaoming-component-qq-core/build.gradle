@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+// if publish script exists, apply it
+def publishScript = new File(project.rootDir, 'publish.gradle')
+if (publishScript.exists()) {
+    apply from: publishScript.absolutePath
+}
+
+apply from: '../mirrors.gradle'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    api project(':xiaoming-component-qq-api')
+    api 'cn.codethink:codethink-common:1.0-SNAPSHOT'
+    api 'cn.codethink:xiaoming-core:5.0.0-SNAPSHOT'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+}
+
+test {
+    useJUnitPlatform()
+}
